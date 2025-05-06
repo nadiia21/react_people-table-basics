@@ -1,7 +1,7 @@
 import React from 'react';
 import { Person } from '../../types';
 import classNames from 'classnames';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 type PersonProps = {
   person: Person;
@@ -16,20 +16,19 @@ export const PersonLink: React.FC<PersonProps> = ({ person, hasInTable }) => {
   return (
     <tr
       data-cy="person"
-      key={name}
       className={classNames({
         'has-background-warning': personSlug === slug,
       })}
     >
       <td>
-        <a
-          href={`#/people/${slug}`}
+        <Link
+          to={`/people/${slug}`}
           className={classNames({
             'has-text-danger': sex === 'f',
           })}
         >
           {name}
-        </a>
+        </Link>
       </td>
 
       <td>{sex}</td>
@@ -39,14 +38,14 @@ export const PersonLink: React.FC<PersonProps> = ({ person, hasInTable }) => {
         {motherName === null ? (
           '-'
         ) : hasInTable(motherName) ? (
-          <a
+          <Link
             className={classNames({
               'has-text-danger': hasInTable(motherName),
             })}
-            href={`#/people/${hasInTable(motherName)?.slug}`}
+            to={`/people/${hasInTable(motherName)?.slug}`}
           >
             {motherName}
-          </a>
+          </Link>
         ) : (
           `${motherName}`
         )}
@@ -55,7 +54,9 @@ export const PersonLink: React.FC<PersonProps> = ({ person, hasInTable }) => {
         {fatherName === null ? (
           '-'
         ) : hasInTable(fatherName) ? (
-          <a href={`#/people/${hasInTable(fatherName)?.slug}`}>{fatherName}</a>
+          <Link to={`/people/${hasInTable(fatherName)?.slug}`}>
+            {fatherName}
+          </Link>
         ) : (
           `${fatherName}`
         )}
